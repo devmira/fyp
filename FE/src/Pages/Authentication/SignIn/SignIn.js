@@ -28,7 +28,7 @@ const SignIn = ({ history }) => {
             email: values["email"],
             password: values["password"],
           },
-          { withCredentials: false }
+          { withCredentials: true }
         )
         .then((response) => {
           if (response.data.accessToken) {
@@ -95,8 +95,7 @@ const SignIn = ({ history }) => {
                 <NavLink to="/auth/reset-password-1">Reset</NavLink>
               </p>
               <p className="mb-0 text-muted">
-                Don’t have an account?{" "}
-                <NavLink to="/auth/signup-1">Signup</NavLink>
+                Don’t have an account? <NavLink to="/signup">Signup</NavLink>
               </p>
             </div>
           </div>

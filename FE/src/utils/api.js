@@ -2,6 +2,7 @@ import axios from "axios";
 import TokenService from "./token.service";
 const api = axios.create({
   baseURL: "http://localhost:5000",
+  withCredentials: true,
 });
 api.interceptors.request.use(
   (config) => {
