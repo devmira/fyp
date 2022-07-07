@@ -1,143 +1,62 @@
 import React from "react";
-import { Dropdown } from "react-bootstrap";
-import tokenService from "../../../../../utils/token.service";
-import ChatList from "./ChatList";
+import { Button } from "react-bootstrap";
 import Aux from "../../../../../hoc/_Aux";
-import DEMO from "../../../../../store/constant";
 import useAuth from "../../../../../hooks/auth";
-import Avatar1 from "../../../../../assets/images/user/avatar-1.jpg";
-import Avatar2 from "../../../../../assets/images/user/avatar-2.jpg";
-import Avatar3 from "../../../../../assets/images/user/avatar-3.jpg";
+import tokenService from "../../../../../utils/token.service";
 
 const NavRight = (props) => {
-  const { logout } = useAuth();
-  const [listOpen, setList] = React.useState(false);
+  const { logout, authed } = useAuth();
   return (
     <Aux>
       <ul className="navbar-nav ml-auto">
+        {authed &&
+          tokenService.getUser().role === "Customer" &&
+          window.location.pathname === "/home" && (
+            <li>
+              <a href="/my-cart">My Cart</a>
+            </li>
+          )}
+        {authed &&
+          tokenService.getUser().role === "Merchant" &&
+          window.location.pathname === "/home" && (
+            <>
+              <li>
+                <a href="/coupons">My Coupons</a>
+              </li>
+              <li>
+                <a href="/create-coupon">Create Coupon</a>
+              </li>
+            </>
+          )}
+        {authed &&
+          tokenService.getUser().role === "Admin" &&
+          window.location.pathname === "/home" && (
+            <>
+              <li>
+                <a href="/admin/merchants">Merchants</a>
+              </li>
+              <li>
+                <a href="/admin/coupons">Coupons</a>
+              </li>
+            </>
+          )}
         <li>
-          <Dropdown alignRight={!props.rtlLayout}>
-            <Dropdown.Toggle variant={"link"} id="dropdown-basic">
-              <i className="icon feather icon-bell" />
-            </Dropdown.Toggle>
-            <Dropdown.Menu alignRight className="notification">
-              <div className="noti-head">
-                <h6 className="d-inline-block m-b-0">Notifications</h6>
-                <div className="float-right">
-                  <a href={DEMO.BLANK_LINK} className="m-r-10">
-                    mark as read
-                  </a>
-                  <a href={DEMO.BLANK_LINK}>clear all</a>
-                </div>
-              </div>
-              <ul className="noti-body">
-                <li className="n-title">
-                  <p className="m-b-0">NEW</p>
-                </li>
-                <li className="notification">
-                  <div className="media">
-                    <img
-                      className="img-radius"
-                      src={Avatar1}
-                      alt="Generic placeholder"
-                    />
-                    <div className="media-body">
-                      <p>
-                        <strong>John Doe</strong>
-                        <span className="n-time text-muted">
-                          <i className="icon feather icon-clock m-r-10" />
-                          30 min
-                        </span>
-                      </p>
-                      <p>New ticket Added</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="n-title">
-                  <p className="m-b-0">EARLIER</p>
-                </li>
-                <li className="notification">
-                  <div className="media">
-                    <img
-                      className="img-radius"
-                      src={Avatar2}
-                      alt="Generic placeholder"
-                    />
-                    <div className="media-body">
-                      <p>
-                        <strong>Joseph William</strong>
-                        <span className="n-time text-muted">
-                          <i className="icon feather icon-clock m-r-10" />
-                          30 min
-                        </span>
-                      </p>
-                      <p>Prchace New Theme and make payment</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="notification">
-                  <div className="media">
-                    <img
-                      className="img-radius"
-                      src={Avatar3}
-                      alt="Generic placeholder"
-                    />
-                    <div className="media-body">
-                      <p>
-                        <strong>Sara Soudein</strong>
-                        <span className="n-time text-muted">
-                          <i className="icon feather icon-clock m-r-10" />
-                          30 min
-                        </span>
-                      </p>
-                      <p>currently login</p>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <div className="noti-footer">
-                <a href={DEMO.BLANK_LINK}>show all</a>
-              </div>
-            </Dropdown.Menu>
-          </Dropdown>
-        </li>
-        <li className={props.rtlLayout ? "m-r-15" : "m-l-15"}>
-          <a
-            href={DEMO.BLANK_LINK}
-            className="displayChatbox"
-            onClick={() => {
-              setList(true);
-            }}
-          >
-            <i className="icon feather icon-mail" />
-          </a>
-        </li>
-        <li>
-          <Dropdown alignRight={!props.rtlLayout} className="drp-user">
-            <Dropdown.Toggle variant={"link"} id="dropdown-basic">
-              <i className="icon feather icon-settings" />
-            </Dropdown.Toggle>
-            <Dropdown.Menu alignRight className="profile-notification">
-              <div className="pro-head">
-                <span>{tokenService.getUser().fullname}</span>
-                <div
-                  className="dud-logout"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => logout()}
-                >
-                  <i className="feather icon-log-out" />
-                </div>
-              </div>
-            </Dropdown.Menu>
-          </Dropdown>
+          {authed ? (
+            <Button onClick={() => logout()} variant="primary" type="submit">
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Button href="/signin" variant="primary" type="submit">
+                Login
+              </Button>
+              <Button href="/signup" variant="primary" type="submit">
+                Sign Up
+              </Button>
+            </>
+          )}
         </li>
       </ul>
-      <ChatList
-        listOpen={listOpen}
-        closed={() => {
-          setList(false);
-        }}
-      />
     </Aux>
   );
 };

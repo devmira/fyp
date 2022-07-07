@@ -87,9 +87,13 @@ class AdminLayout extends Component {
                         <Switch>
                           {menu}
                           {tokenService.getUser().role === "Merchant" ? (
-                            <Redirect from="/" to="/coupons" />
+                            <Redirect exact from="/" to="/coupons" />
                           ) : (
-                            <Redirect from="/" to={this.props.defaultPath} />
+                            <Redirect
+                              exact
+                              from="/"
+                              to={this.props.defaultPath}
+                            />
                           )}
                         </Switch>
                       </Suspense>

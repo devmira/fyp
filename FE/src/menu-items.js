@@ -8,11 +8,18 @@ export default {
       permission: ["Merchant"],
       children: [
         {
+          id: "home",
+          title: "Home",
+          type: "item",
+          url: "/home",
+          icon: "feather icon-home",
+        },
+        {
           id: "coupons",
-          title: "Сoupons",
+          title: "My Сoupons",
           type: "item",
           url: "/coupons",
-          icon: "feather icon-home",
+          icon: "feather icon-list",
         },
         {
           id: "create-coupon",
@@ -20,7 +27,7 @@ export default {
           type: "item",
           url: "/create-coupon",
           classes: "nav-item",
-          icon: "feather icon-sidebar",
+          icon: "feather icon-file-plus",
         },
       ],
     },
@@ -32,10 +39,10 @@ export default {
       permission: ["Customer"],
       children: [
         {
-          id: "dashboard",
-          title: "Dashboard",
+          id: "home",
+          title: "Home",
           type: "item",
-          url: "/dashboard",
+          url: "/home",
           icon: "feather icon-home",
         },
         {
@@ -43,7 +50,7 @@ export default {
           title: "My Cart",
           type: "item",
           url: "/my-cart",
-          icon: "feather icon-home",
+          icon: "feather icon-list",
         },
       ],
     },
@@ -55,10 +62,10 @@ export default {
       permission: ["Admin"],
       children: [
         {
-          id: "dashboard",
-          title: "Dashboard",
+          id: "home",
+          title: "Home",
           type: "item",
-          url: "/dashboard",
+          url: "/home",
           icon: "feather icon-home",
         },
         {
@@ -66,14 +73,14 @@ export default {
           title: "Merchants",
           type: "item",
           url: "/admin/merchants",
-          icon: "feather icon-home",
+          icon: "feather icon-users",
         },
         {
           id: "admin-coupons",
           title: "Coupons",
           type: "item",
           url: "/admin/coupons",
-          icon: "feather icon-home",
+          icon: "feather icon-file",
         },
       ],
     },
