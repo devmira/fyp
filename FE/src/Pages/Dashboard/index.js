@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import CouponCard from "../../App/components/CouponCard";
 import Aux from "../../hoc/_Aux";
 import api from "../../utils/api";
 import tokenService from "../../utils/token.service";
-import { RegionDropdown } from "react-country-region-selector";
-import { sectionList } from "../../utils/services.js";
+import FilterCoupons from "../../App/components/FilterCoupons";
 
 const Dashboard = () => {
   const [coupons, setCoupons] = useState([]);
   const [userCoupons, setUserCoupons] = useState([]);
-  const [region, setRegion] = React.useState("");
-  const [section, setSection] = React.useState("");
-  const updateList = (type, value) => {
-    const newList = coupons.filter((coupon) => {
-      if (coupon.city === region && coupon.section === section) {
-        return coupon;
-      }
-    });
-    setUserCoupons(newList);
-  };
+  const [filteredCoupons, setFilteredCoupons] = useState([]);
+
   const updateUserCouponList = () => {
     api
       .get(
@@ -27,41 +18,27 @@ const Dashboard = () => {
       )
       .then((response) => {
         setUserCoupons(response.data);
+        setFilteredCoupons(response.data);
       });
   };
 
   useEffect(() => {
     api.get("http://localhost:5000/coupons").then((response) => {
       setCoupons(response.data);
+      setFilteredCoupons(response.data);
     });
     updateUserCouponList();
   }, []);
   return (
     <Aux>
       <Row>
-        <RegionDropdown
-          name="city"
-          country="Malaysia"
-          value={region}
-          onChange={(val) => {
-            setRegion(val);
-            updateList("city", val);
-          }}
+        <FilterCoupons
+          coupons={coupons}
+          setFilteredCoupons={setFilteredCoupons}
         />
-        <Form.Control
-          as="select"
-          value={section}
-          name="section"
-          onChange={(e) => {
-            setSection(e.target.value);
-            updateList("section");
-          }}
-        >
-          {sectionList.map((sec) => {
-            return <option key={sec}>{sec}</option>;
-          })}
-        </Form.Control>
-        {coupons.map((coupon) => {
+      </Row>
+      <Row>
+        {filteredCoupons.map((coupon) => {
           return (
             (new Date(coupon.expiry_date) > new Date() ||
               coupon.expiry_date === null) && (

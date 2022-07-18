@@ -12,6 +12,7 @@ import routes from "../route";
 import SignIn from "../Pages/Authentication/SignIn/SignIn";
 import SignUp from "../Pages/Authentication/SignUp/SignUp";
 import LandingPage from "../Pages/landingPage.js";
+import InventingSystem from "../Pages/inventing.js";
 
 const AdminLayout = Loadable({
   loader: () => import("./layout/AdminLayout"),
@@ -40,6 +41,7 @@ const App = () => {
         <Suspense fallback={<Loader />}>
           <Switch>
             <Route path="/home" component={LandingPage} />
+            <Route path="/inventing-system" component={InventingSystem} />
             {authed && <Route path="/" component={AdminLayout} />}
             <Route path="/signup" component={SignUp} />
             <Route path="/signin" component={SignIn} />

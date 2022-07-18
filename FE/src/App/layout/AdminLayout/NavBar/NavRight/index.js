@@ -13,7 +13,9 @@ const NavRight = (props) => {
           tokenService.getUser().role === "Customer" &&
           window.location.pathname === "/home" && (
             <li>
-              <a href="/my-cart">My Cart</a>
+              <a className="nav-text" href="/my-cart">
+                My Cart
+              </a>
             </li>
           )}
         {authed &&
@@ -21,10 +23,14 @@ const NavRight = (props) => {
           window.location.pathname === "/home" && (
             <>
               <li>
-                <a href="/coupons">My Coupons</a>
+                <a className="nav-text" href="/coupons">
+                  My Coupons
+                </a>
               </li>
               <li>
-                <a href="/create-coupon">Create Coupon</a>
+                <a className="nav-text" href="/create-coupon">
+                  Create Coupon
+                </a>
               </li>
             </>
           )}
@@ -33,10 +39,14 @@ const NavRight = (props) => {
           window.location.pathname === "/home" && (
             <>
               <li>
-                <a href="/admin/merchants">Merchants</a>
+                <a className="nav-text" href="/admin/merchants">
+                  Merchants
+                </a>
               </li>
               <li>
-                <a href="/admin/coupons">Coupons</a>
+                <a className="nav-text" href="/admin/coupons">
+                  Coupons
+                </a>
               </li>
             </>
           )}
@@ -47,7 +57,12 @@ const NavRight = (props) => {
             </Button>
           ) : (
             <>
-              <Button href="/signin" variant="primary" type="submit">
+              <Button
+                href="/signin"
+                variant="primary"
+                style={{ marginRight: "10px" }}
+                type="submit"
+              >
                 Login
               </Button>
               <Button href="/signup" variant="primary" type="submit">

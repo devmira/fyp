@@ -4,7 +4,7 @@ import api from "../utils/api";
 import { Button, Row } from "react-bootstrap";
 import tokenService from "../utils/token.service";
 import { toast } from "react-toastify";
-import QRCode from "qrcode.react";
+import { QRCodeCanvas } from "qrcode.react";
 import JsBarcode from "jsbarcode";
 import {
   PDFDownloadLink,
@@ -35,24 +35,59 @@ const CouponView = ({ match }) => {
   const qrCodeDataUri =
     qrCodeCanvas && qrCodeCanvas.toDataURL("image/jpg", 0.3);
   const canvas = document.createElement("canvas");
-  JsBarcode(canvas, "https://reactjs.org/");
+  JsBarcode(canvas, coupon.coupon_code).options({
+    format: "CODE128",
+    width: "4px",
+    height: "40px",
+  });
   const barcode = canvas.toDataURL();
 
   const MyDoc = () => (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text>{coupon.name}</Text>
-          <Text>{coupon.description}</Text>
-          <Text>{coupon.expiry_date}</Text>
-          <Image src={coupon.image} width="500" height="600" />
+          <Text
+            style={{
+              textAlign: "center",
+              color: "rgb(63,77,103)",
+              marginBottom: "30px",
+            }}
+          >
+            {coupon.name}
+          </Text>
           <Image
-            allowDangerousPaths
-            src={qrCodeDataUri}
-            width="50"
-            height="60"
+            style={{ textAlign: "center", marginBottom: "30px" }}
+            src={coupon.image}
+            width="500"
+            height="600"
           />
-          <Image allowDangerousPaths src={barcode} width="50" height="60" />
+          <Text
+            style={{
+              textAlign: "justify",
+              color: "rgb(63,77,103)",
+              marginBottom: "30px",
+            }}
+          >
+            {coupon.description}
+          </Text>
+          <Text
+            style={{
+              color: "rgb(63,77,103)",
+            }}
+          >
+            Expiry date: {coupon.expiry_date}
+          </Text>
+
+          {(coupon.inventoryType === null ||
+            coupon.inventoryType === "None" ||
+            coupon.inventoryType === "QR code") && (
+            <Image allowDangerousPaths src={qrCodeDataUri} />
+          )}
+          {(coupon.inventoryType === null ||
+            coupon.inventoryType === "None" ||
+            coupon.inventoryType === "Barcode") && (
+            <Image allowDangerousPaths src={barcode} width="50" height="60" />
+          )}
         </View>
       </Page>
     </Document>
@@ -103,16 +138,17 @@ const CouponView = ({ match }) => {
   return (
     <Aux>
       <div style={{ display: "none" }}>
-        <QRCode
+        <QRCodeCanvas
           id="qrCanvas"
-          value="https://reactjs.org/"
-          renderAs="canvas"
-          includeMargin={false}
-          size={100}
+          value={coupon.coupon_code}
+          style={{ height: "50px" }}
         />
       </div>
       <Row>
         <p>{coupon.name}</p>
+      </Row>
+      <Row>
+        <img src={coupon.image} />
       </Row>
       <Row>
         <p>{coupon.description}</p>
@@ -129,10 +165,13 @@ const CouponView = ({ match }) => {
         ) : (
           <Button
             className="label theme-bg text-white f-12"
-            style={{ borderColor: "transparent" }}
-            //onClick={() => handleSubmit()}
+            style={{ borderColor: "transparent", width: "auto" }}
           >
-            <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
+            <PDFDownloadLink
+              document={<MyDoc />}
+              fileName={`${coupon.name}_${coupon.expiry_date}`}
+              style={{ color: "white" }}
+            >
               {({ blob, url, loading, error }) =>
                 loading ? "Loading document..." : "Download now!"
               }

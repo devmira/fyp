@@ -50,6 +50,12 @@ const Coupons = () => {
     return createdDate;
   };
 
+  const status = {
+    null: 1,
+    true: 2,
+    false: 3,
+  };
+
   useEffect(() => {
     getCoupons();
   }, []);
@@ -72,60 +78,62 @@ const Coupons = () => {
                     <th>Date of creation</th>
                     <th>Action</th>
                   </tr>
-                  {coupons.map((coupon, index) => {
-                    return (
-                      <tr key={index} className="unread">
-                        <td>
-                          <h6 className="mb-1">{coupon.name}</h6>
-                        </td>
-                        <td>
-                          <h6 className="mb-1">{coupon.merchantFullname}</h6>
-                        </td>
-                        <td>
-                          <h6 className="mb-1">{coupon.brandname}</h6>
-                        </td>
-                        <td>
-                          <h6 className="text-muted">
-                            <i className="fa fa-circle text-c-green f-10 m-r-15" />
-                            {getDate(coupon.created_at)}
-                          </h6>
-                        </td>
-                        <td>
-                          {coupon.status === true ? (
-                            <Button
-                              onClick={() => {
-                                doAction("Delete", coupon.id);
-                              }}
-                              className="label theme-bg2 text-white f-12"
-                            >
-                              Delete
-                            </Button>
-                          ) : coupon.status === false ? (
-                            <p>Rejected</p>
-                          ) : (
-                            <>
+                  {coupons
+                    .sort((a, b) => status[a.status] - status[b.status])
+                    .map((coupon, index) => {
+                      return (
+                        <tr key={index} className="unread">
+                          <td>
+                            <h6 className="mb-1">{coupon.name}</h6>
+                          </td>
+                          <td>
+                            <h6 className="mb-1">{coupon.merchantFullname}</h6>
+                          </td>
+                          <td>
+                            <h6 className="mb-1">{coupon.brandname}</h6>
+                          </td>
+                          <td>
+                            <h6 className="text-muted">
+                              <i className="fa fa-circle text-c-green f-10 m-r-15" />
+                              {getDate(coupon.created_at)}
+                            </h6>
+                          </td>
+                          <td>
+                            {coupon.status === true ? (
                               <Button
                                 onClick={() => {
-                                  doAction(false, coupon.id);
+                                  doAction("Delete", coupon.id);
                                 }}
                                 className="label theme-bg2 text-white f-12"
                               >
-                                Reject
+                                Delete
                               </Button>
-                              <Button
-                                onClick={() => {
-                                  doAction(true, coupon.id);
-                                }}
-                                className="label theme-bg text-white f-12"
-                              >
-                                Approve
-                              </Button>
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                            ) : coupon.status === false ? (
+                              <p>Rejected</p>
+                            ) : (
+                              <>
+                                <Button
+                                  onClick={() => {
+                                    doAction(false, coupon.id);
+                                  }}
+                                  className="label theme-bg2 text-white f-12"
+                                >
+                                  Reject
+                                </Button>
+                                <Button
+                                  onClick={() => {
+                                    doAction(true, coupon.id);
+                                  }}
+                                  className="label theme-bg text-white f-12"
+                                >
+                                  Approve
+                                </Button>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </Table>
             </Card.Body>

@@ -4,6 +4,7 @@ import NavRight from "./NavRight";
 import Aux from "../../../../hoc/_Aux";
 import DEMO from "../../../../store/constant";
 import * as actionTypes from "../../../../store/actions";
+import Logo from "../../../../assets/images/logo.png";
 
 class NavBar extends Component {
   render() {
@@ -19,7 +20,14 @@ class NavBar extends Component {
 
     return (
       <Aux>
-        <header className={headerClass.join(" ")}>
+        <header
+          className={`${headerClass.join(" ")} ${
+            window.location.pathname === "/home" ? "navBar-dark" : ""
+          }`}
+        >
+          {window.location.pathname === "/home" && (
+            <img src={Logo} width="200" style={{ paddingLeft: "40px" }} />
+          )}
           <div className="m-header">
             <a href={DEMO.BLANK_LINK} className="b-brand">
               <div className="b-bg">

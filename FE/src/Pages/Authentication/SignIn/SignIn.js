@@ -7,6 +7,8 @@ import TokenService from "../../../utils/token.service";
 import "./../../../assets/scss/style.scss";
 import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignIn = ({ history }) => {
   const [values, setValues] = useState({});
@@ -40,7 +42,7 @@ const SignIn = ({ history }) => {
         });
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data.msg);
+        toast.warning(error.response.data.msg);
       }
     }
   };
@@ -80,20 +82,10 @@ const SignIn = ({ history }) => {
                     placeholder="Password"
                   />
                 </Form.Group>
-                {/* <div className="form-group text-left">
-                  <div className="checkbox checkbox-fill d-inline">
-                    <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" />
-                    <label htmlFor="checkbox-fill-a1" className="cr"> Save credentials</label>
-                  </div>
-                </div> */}
                 <Button variant="primary" className="shadow" type="submit">
                   Login
                 </Button>
               </Form>
-              <p className="mb-2 text-muted">
-                Forgot password?{" "}
-                <NavLink to="/auth/reset-password-1">Reset</NavLink>
-              </p>
               <p className="mb-0 text-muted">
                 Don’t have an account? <NavLink to="/signup">Signup</NavLink>
               </p>

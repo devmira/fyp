@@ -50,6 +50,11 @@ const Merchants = () => {
     return createdDate;
   };
 
+  const status = {
+    null: 1,
+    true: 2,
+    false: 3,
+  };
   useEffect(() => {
     getMerchants();
   }, []);
@@ -71,58 +76,60 @@ const Merchants = () => {
                     <th>Date of joining</th>
                     <th>Action</th>
                   </tr>
-                  {merchants.map((merchant, index) => {
-                    return (
-                      <tr key={index} className="unread">
-                        <td>
-                          <h6 className="mb-1">{merchant.fullname}</h6>
-                          <p className="m-0">{merchant.email}</p>
-                        </td>
-                        <td>
-                          <h6 className="mb-1">{merchant.brandname}</h6>
-                        </td>
-                        <td>
-                          <h6 className="text-muted">
-                            <i className="fa fa-circle text-c-green f-10 m-r-15" />
-                            {getDate(merchant.created_at)}
-                          </h6>
-                        </td>
-                        <td>
-                          {merchant.status === true ? (
-                            <Button
-                              onClick={() => {
-                                doAction("Delete", merchant.id);
-                              }}
-                              className="label theme-bg2 text-white f-12"
-                            >
-                              Delete
-                            </Button>
-                          ) : merchant.status === false ? (
-                            <p>Rejected</p>
-                          ) : (
-                            <>
+                  {merchants
+                    .sort((a, b) => status[a.status] - status[b.status])
+                    .map((merchant, index) => {
+                      return (
+                        <tr key={index} className="unread">
+                          <td>
+                            <h6 className="mb-1">{merchant.fullname}</h6>
+                            <p className="m-0">{merchant.email}</p>
+                          </td>
+                          <td>
+                            <h6 className="mb-1">{merchant.brandname}</h6>
+                          </td>
+                          <td>
+                            <h6 className="text-muted">
+                              <i className="fa fa-circle text-c-green f-10 m-r-15" />
+                              {getDate(merchant.created_at)}
+                            </h6>
+                          </td>
+                          <td>
+                            {merchant.status === true ? (
                               <Button
                                 onClick={() => {
-                                  doAction(false, merchant.id);
+                                  doAction("Delete", merchant.id);
                                 }}
                                 className="label theme-bg2 text-white f-12"
                               >
-                                Reject
+                                Delete
                               </Button>
-                              <Button
-                                onClick={() => {
-                                  doAction(true, merchant.id);
-                                }}
-                                className="label theme-bg text-white f-12"
-                              >
-                                Approve
-                              </Button>
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                            ) : merchant.status === false ? (
+                              <p>Rejected</p>
+                            ) : (
+                              <>
+                                <Button
+                                  onClick={() => {
+                                    doAction(false, merchant.id);
+                                  }}
+                                  className="label theme-bg2 text-white f-12"
+                                >
+                                  Reject
+                                </Button>
+                                <Button
+                                  onClick={() => {
+                                    doAction(true, merchant.id);
+                                  }}
+                                  className="label theme-bg text-white f-12"
+                                >
+                                  Approve
+                                </Button>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </Table>
             </Card.Body>
