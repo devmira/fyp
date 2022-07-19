@@ -16,7 +16,6 @@ const Coupons = () => {
       .then((response) => {
         setCoupons(response.data);
       });
-    //updateUserCouponList();
   }, []);
   return (
     <Aux>

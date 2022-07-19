@@ -27,7 +27,6 @@ const SamplePage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(values);
     try {
       const data = new FormData();
       const file = values["file"];

@@ -30,7 +30,7 @@ const MyCart = () => {
         {userCoupons.map((coupon) => {
           return (
             <Col md={6} xl={4} key={coupon.id}>
-              <CouponCard coupon={coupon} disabled={true} action={false} />
+              <CouponCard coupon={coupon} disabled={true} action={true} />
             </Col>
           );
         })}

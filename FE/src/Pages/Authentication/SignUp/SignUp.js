@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const SignUp = (props) => {
   const [values, setValues] = useState({
-    role: "Merchadise",
+    role: "Merchant",
   });
   const onFormChange = (e) => {
     const name = e.target.name;

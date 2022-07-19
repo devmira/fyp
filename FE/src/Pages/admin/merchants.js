@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Row, Col, Card, Table, Button } from "react-bootstrap";
 import Aux from "../../hoc/_Aux";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
+import emailjs from "@emailjs/browser";
 
 const Merchants = () => {
   const [merchants, setMerchants] = useState([]);
+  const form = useRef(null);
 
   const getMerchants = () => {
     api.get(`http://localhost:5000/merchants`).then((response) => {
@@ -24,6 +26,39 @@ const Merchants = () => {
           toast.success(
             `Merchant is successfully ${action ? "approved" : "rejected"}!`
           );
+          if (action) {
+            emailjs
+              .sendForm(
+                process.env.REACT_APP_EMAIL_SERVICE_ID,
+                process.env.REACT_APP_EMAIL_TEMPLATE_ID_APPROVE,
+                form.current,
+                process.env.REACT_APP_EMAIL_TOKEN
+              )
+              .then(
+                (result) => {
+                  console.log(result.text);
+                },
+                (error) => {
+                  console.log(error.text);
+                }
+              );
+          } else {
+            emailjs
+              .sendForm(
+                process.env.REACT_APP_EMAIL_SERVICE_ID,
+                process.env.REACT_APP_EMAIL_TEMPLATE_ID_REJECT,
+                form.current,
+                process.env.REACT_APP_EMAIL_TOKEN
+              )
+              .then(
+                (result) => {
+                  console.log(result.text);
+                },
+                (error) => {
+                  console.log(error.text);
+                }
+              );
+          }
         });
     } else {
       api
@@ -82,6 +117,25 @@ const Merchants = () => {
                       return (
                         <tr key={index} className="unread">
                           <td>
+                            <form ref={form} onSubmit={doAction}>
+                              <div className="col-4">
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  name="email"
+                                  readOnly
+                                  value={merchant.email}
+                                  hidden
+                                />
+                                <input
+                                  hidden
+                                  readOnly
+                                  className="form-control"
+                                  name="name"
+                                  value={merchant.fullname}
+                                />
+                              </div>
+                            </form>
                             <h6 className="mb-1">{merchant.fullname}</h6>
                             <p className="m-0">{merchant.email}</p>
                           </td>
@@ -133,7 +187,7 @@ const Merchants = () => {
                 </tbody>
               </Table>
             </Card.Body>
-          </Card>
+          </Card>{" "}
         </Col>
       </Row>
     </Aux>

@@ -42,11 +42,3 @@ api.interceptors.response.use(
   }
 );
 export default api;
-
-// if (expire * 1000 < currentDate.getTime()) {
-//   const response = await axios.get('http://localhost:5000/token');
-//   setToken(response.data.accessToken);
-//   const decoded = jwt_decode(response.data.accessToken);
-//   setName(decoded.name);
-//   setExpire(decoded.exp);
-// }

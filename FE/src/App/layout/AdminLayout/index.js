@@ -1,8 +1,6 @@
 import React, { Component, Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 import Fullscreen from "react-full-screen";
-import windowSize from "react-window-size";
 import tokenService from "../../../utils/token.service";
 import Navigation from "./Navigation";
 import NavBar from "./NavBar";
@@ -10,7 +8,6 @@ import Breadcrumb from "./Breadcrumb";
 import Loader from "../Loader";
 import routes from "../../../routes";
 import Aux from "../../../hoc/_Aux";
-import * as actionTypes from "../../../store/actions";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./app.scss";
@@ -89,11 +86,7 @@ class AdminLayout extends Component {
                           {tokenService.getUser().role === "Merchant" ? (
                             <Redirect exact from="/" to="/coupons" />
                           ) : (
-                            <Redirect
-                              exact
-                              from="/"
-                              to={this.props.defaultPath}
-                            />
+                            <Redirect exact from="/" to="/home" />
                           )}
                         </Switch>
                       </Suspense>
@@ -109,24 +102,4 @@ class AdminLayout extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    defaultPath: state.defaultPath,
-    isFullScreen: state.isFullScreen,
-    collapseMenu: state.collapseMenu,
-    configBlock: state.configBlock,
-    layout: state.layout,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onFullScreenExit: () => dispatch({ type: actionTypes.FULL_SCREEN_EXIT }),
-    onComponentWillMount: () => dispatch({ type: actionTypes.COLLAPSE_MENU }),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(windowSize(AdminLayout));
+export default AdminLayout;

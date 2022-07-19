@@ -12,7 +12,6 @@ export const createCoupon = async (req, res) => {
     inventoryType,
     section,
     merchant_id,
-    status,
   } = req.body;
   const url = req.protocol + "://" + req.get("host");
   try {
@@ -26,7 +25,7 @@ export const createCoupon = async (req, res) => {
       inventoryType: inventoryType,
       section: section,
       merchant_id: merchant_id,
-      status: status,
+      status: null,
       image: url + "/public/" + req.file.filename,
     });
     res.json({ msg: "Coupon successfully created!" });

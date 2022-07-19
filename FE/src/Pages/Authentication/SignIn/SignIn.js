@@ -33,12 +33,28 @@ const SignIn = ({ history }) => {
           { withCredentials: true }
         )
         .then((response) => {
-          if (response.data.accessToken) {
-            TokenService.setUser(response.data);
+          if (
+            response.data.role === "Merchant" &&
+            response.data.status === null
+          ) {
+            toast.warning(
+              "You haven't been approved yet, we will contact you via email"
+            );
+          } else if (
+            response.data.role === "Merchant" &&
+            response.data.status === false
+          ) {
+            toast.warning(
+              "You have been rejected by our admin, please check your email"
+            );
+          } else {
+            if (response.data.accessToken) {
+              TokenService.setUser(response.data);
+            }
+            login().then(() => {
+              history.push("/");
+            });
           }
-          login().then(() => {
-            history.push("/");
-          });
         });
     } catch (error) {
       if (error.response) {

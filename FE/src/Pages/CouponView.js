@@ -148,7 +148,11 @@ const CouponView = ({ match }) => {
         <p>{coupon.name}</p>
       </Row>
       <Row>
-        <img src={coupon.image} />
+        <img
+          alt="Coupon banner"
+          style={{ width: "auto", height: "300px" }}
+          src={coupon.image}
+        />
       </Row>
       <Row>
         <p>{coupon.description}</p>

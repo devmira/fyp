@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Card, Row, Modal } from "react-bootstrap";
 import tokenService from "../../utils/token.service";
 import { Route } from "react-router-dom";
 import useAuth from "../../hooks/auth";
-import { useStore } from "react-redux";
+import api from "../../utils/api";
 
 const CouponCard = ({ coupon, action = true }) => {
   const { authed } = useAuth();
   const [show, setShow] = React.useState(false);
+  const [view, setView] = React.useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    api
+      .get(
+        `http://localhost:5000/get-user-coupons/${tokenService.getUser().id}`
+      )
+      .then((response) => {
+        const couponExist = response.data.find((userCoupon) => {
+          if (userCoupon.coupon_id === coupon.id) {
+            return userCoupon;
+          }
+          return null;
+        });
+        if (couponExist) {
+          setView(true);
+        }
+      });
+  }, [coupon]);
   return (
     <>
       <Card className="coupon-card-container">
@@ -45,6 +64,22 @@ const CouponCard = ({ coupon, action = true }) => {
               </b>
             )
           )}
+          {tokenService.getUser()?.role === "Merchant" &&
+            coupon.merchant_id === tokenService.getUser()?.id &&
+            window.location.pathname !== "/home" &&
+            (coupon.status === null ? (
+              <b>
+                Satus: <p className="text-c-yellow">PENDING</p>
+              </b>
+            ) : coupon.status === false ? (
+              <b>
+                Satus: <p className="text-c-red">REJECTED</p>
+              </b>
+            ) : (
+              <b>
+                Satus: <p className="text-c-green">APPROVED</p>
+              </b>
+            ))}
           {authed &&
             tokenService.getUser()?.role === "Customer" &&
             action &&
@@ -70,7 +105,7 @@ const CouponCard = ({ coupon, action = true }) => {
                         })
                       }
                     >
-                      Get deal
+                      {view ? "View" : "Get deal"}
                     </Button>
                   )}
                 />

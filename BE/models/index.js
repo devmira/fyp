@@ -1,8 +1,5 @@
 import dbConfig from "../config/Database.js";
 import Sequelize from "sequelize";
-// import Coupons from "./CouponModel.js";
-// import Users from "./UserModel.js";
-// import UserCoupons from "./UserCouponsModel.js";
 
 const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   logging: false,
@@ -21,14 +18,3 @@ const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
 });
 export default db;
-
-// export const CouponsModel = Coupons;
-// export const UsersModel = Users;
-// export const UserCouponsModel = UserCoupons;
-
-// CouponsModel.hasOne(Users, {
-//   foreignKey: "id",
-//   sourceKey: "merchant_id",
-// });
-
-// UsersModel.belongsTo(Coupons, { foreignKey: "id", targetKey: "merchant_id" });

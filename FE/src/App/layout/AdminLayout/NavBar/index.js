@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import NavRight from "./NavRight";
 import Aux from "../../../../hoc/_Aux";
-import DEMO from "../../../../store/constant";
-import * as actionTypes from "../../../../store/actions";
 import Logo from "../../../../assets/images/logo.png";
 
 class NavBar extends Component {
@@ -26,10 +23,15 @@ class NavBar extends Component {
           }`}
         >
           {window.location.pathname === "/home" && (
-            <img src={Logo} width="200" style={{ paddingLeft: "40px" }} />
+            <img
+              src={Logo}
+              alt="Logo"
+              width="200"
+              style={{ paddingLeft: "40px" }}
+            />
           )}
           <div className="m-header">
-            <a href={DEMO.BLANK_LINK} className="b-brand">
+            <a href="#!" className="b-brand">
               <div className="b-bg">
                 <i className="feather icon-trending-up" />
               </div>
@@ -45,19 +47,4 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    rtlLayout: state.rtlLayout,
-    headerBackColor: state.headerBackColor,
-    headerFixedLayout: state.headerFixedLayout,
-    collapseMenu: state.collapseMenu,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onToggleNavigation: () => dispatch({ type: actionTypes.COLLAPSE_MENU }),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default NavBar;

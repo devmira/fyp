@@ -23,9 +23,17 @@ const FilterCoupons = ({ coupons, setFilteredCoupons }) => {
         item.city === filter.city
       ) {
         return true;
-      } else if (filter.city !== "" && item.city === filter.city) {
+      } else if (
+        filter.city !== "" &&
+        filter.section === "" &&
+        item.city === filter.city
+      ) {
         return true;
-      } else if (filter.section !== "" && item.section === filter.section) {
+      } else if (
+        filter.section !== "" &&
+        filter.city === "" &&
+        item.section === filter.section
+      ) {
         return true;
       } else if (filter.city === "" && filter.section === "") {
         return true;

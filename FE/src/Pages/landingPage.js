@@ -13,14 +13,21 @@ const Dashboard = () => {
 
   useEffect(() => {
     api.get("http://localhost:5000/coupons").then((response) => {
-      setCoupons(response.data);
-      setFilteredCoupons(response.data);
+      const activeCoupons = response.data.filter((coupon) => {
+        if (coupon.status === true) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      setCoupons(activeCoupons);
+      setFilteredCoupons(activeCoupons);
     });
   }, []);
   return (
     <Aux>
       <NavBar />
-      <img src={Hero} style={{ height: "100%", width: "100%" }} />
+      <img src={Hero} alt="Logo" style={{ height: "100%", width: "100%" }} />
       <div style={{ margin: "3rem" }}>
         <FilterCoupons
           coupons={coupons}

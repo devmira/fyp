@@ -5,6 +5,7 @@ import Aux from "../../hoc/_Aux";
 import { sectionList } from "../../utils/services.js";
 import axios from "axios";
 import { toast } from "react-toastify";
+import tokenService from "../../utils/token.service";
 
 const CouponViewMerchants = ({ match, history }) => {
   const [coupon, setCoupon] = useState({});
@@ -18,7 +19,6 @@ const CouponViewMerchants = ({ match, history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(values);
     try {
       const data = {
         expiry_date: values["expiry_date"],
@@ -40,7 +40,6 @@ const CouponViewMerchants = ({ match, history }) => {
       }
     }
   };
-  //return;
 
   useEffect(() => {
     api
@@ -59,8 +58,6 @@ const CouponViewMerchants = ({ match, history }) => {
         <Col>
           <Card>
             <Card.Body>
-              <h5>Create Coupon</h5>
-              <hr />
               <Row>
                 <Col md={6}>
                   <Form onSubmit={handleSubmit}>
@@ -96,6 +93,9 @@ const CouponViewMerchants = ({ match, history }) => {
                       <Form.Label>Expiry Date</Form.Label>
                       <Form.Control
                         defaultValue={coupon.expiry_date}
+                        disabled={
+                          coupon.merchant_id !== tokenService.getUser()?.id
+                        }
                         type="date"
                         name="expiry_date"
                         onChange={onFormChange}
@@ -138,10 +138,6 @@ const CouponViewMerchants = ({ match, history }) => {
                         disabled
                         name="city"
                       />
-
-                      {/* <div>
-                        <RegionDropdown name="city" country="Malaysia" />
-                      </div> */}
                     </Form.Group>
                     <Form.Group controlId="quantity">
                       <Form.Label>Quantity</Form.Label>
@@ -149,16 +145,23 @@ const CouponViewMerchants = ({ match, history }) => {
                         defaultValue={coupon.quantity}
                         type="text"
                         name="quantity"
+                        disabled={
+                          coupon.merchant_id !== tokenService.getUser()?.id
+                        }
                         placeholder="30"
                         onChange={onFormChange}
                       />
-                      <Form.Text className="text-muted">
-                        If unlimitted please leave empty
-                      </Form.Text>
+                      {coupon.merchant_id === tokenService.getUser()?.id && (
+                        <Form.Text className="text-muted">
+                          If unlimitted please leave empty
+                        </Form.Text>
+                      )}
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                      Update
-                    </Button>
+                    {coupon.merchant_id === tokenService.getUser()?.id && (
+                      <Button variant="primary" type="submit">
+                        Update
+                      </Button>
+                    )}
                   </Form>
                 </Col>
               </Row>

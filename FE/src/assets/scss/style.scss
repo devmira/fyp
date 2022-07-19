@@ -3,11 +3,9 @@
 @import "partials/variables";
 @import "partials/general";
 @import "partials/generic";
-@import "partials/mixins/function";
 
 // important Element
 @import "partials/menu/menu-lite";
-@import "partials/widget/widget";
 
 // Theme Element
 @import "partials/theme-elements/form";
@@ -25,12 +23,5 @@
 @import "partials/theme-elements/modal";
 
 // Other
-@import "partials/other/chat";
-@import "partials/other/prism";
-@import "partials/other/Switches";
-
-@import "partials/other/chart";
-@import "partials/other/icon-lauouts";
-
 @import "partials/third-party/third-party";
 @import "partials/coupon-card/coupon-card";

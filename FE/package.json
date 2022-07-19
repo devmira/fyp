@@ -1,8 +1,9 @@
 {
-  "name": "datta-able-rv18.0.4",
+  "name": "fyp-fe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^3.6.2",
     "@react-pdf/renderer": "^2.1.2",
     "axios": "^0.26.0",
     "bootstrap": "^4.3.1",
