@@ -79,15 +79,7 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   try {
     const user = await Users.findAll({
-      attributes: [
-        "id",
-        "fullname",
-        "email",
-        "role",
-        "address",
-        "password",
-        "status",
-      ],
+      attributes: ["id", "fullname", "email", "role", "password", "status"],
       where: {
         email: req.body.email,
       },
@@ -128,7 +120,6 @@ export const Login = async (req, res) => {
     response["email"] = user[0].email;
     response["accessToken"] = accessToken;
     response["role"] = user[0].role;
-    response["address"] = user[0].address;
     response["fullname"] = user[0].fullname;
     response["status"] = user[0].status;
     res.json(response);

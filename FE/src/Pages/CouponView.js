@@ -158,6 +158,9 @@ const CouponView = ({ match }) => {
         <p>{coupon.description}</p>
       </Row>
       <Row>
+        <p>{coupon.address}</p>
+      </Row>
+      <Row>
         {!download ? (
           <Button
             className="label theme-bg text-white f-12"

@@ -24,9 +24,6 @@ Users.init(
     password: {
       type: DataTypes.STRING,
     },
-    address: {
-      type: DataTypes.TEXT,
-    },
     role: {
       type: DataTypes.STRING,
     },

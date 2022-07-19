@@ -47,6 +47,9 @@ Coupons.init(
     section: {
       type: DataTypes.STRING,
     },
+    address: {
+      type: DataTypes.STRING,
+    },
   },
   {
     sequelize: db,

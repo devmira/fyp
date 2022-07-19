@@ -37,6 +37,7 @@ const SamplePage = (props) => {
       data.append("description", values["description"]);
       data.append("quantity", values["quantity"]);
       data.append("city", values["city"]);
+      data.append("address", values["address"]);
       data.append("inventoryType", values["inventoryType"]);
       data.append("section", values["section"]);
       data.append("merchant_id", tokenService.getUser().id);
@@ -167,6 +168,16 @@ const SamplePage = (props) => {
                           }}
                         />
                       </div>
+                    </Form.Group>
+                    <Form.Group controlId="address">
+                      <Form.Label>Outlet address</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows="2"
+                        name="address"
+                        placeholder="L3-25, NU SENTRAL, No 201, JLN TUN SAMBANTHAN, 50470, KUALA LUMPUR"
+                        onChange={onFormChange}
+                      />
                     </Form.Group>
                     <Form.Group controlId="quantity">
                       <Form.Label>Quantity</Form.Label>

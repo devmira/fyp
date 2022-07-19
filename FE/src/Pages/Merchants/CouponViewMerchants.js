@@ -139,6 +139,16 @@ const CouponViewMerchants = ({ match, history }) => {
                         name="city"
                       />
                     </Form.Group>
+                    <Form.Group controlId="address">
+                      <Form.Label>Outlet address</Form.Label>
+                      <Form.Control
+                        defaultValue={coupon.address}
+                        disabled
+                        as="textarea"
+                        rows="3"
+                        name="address"
+                      />
+                    </Form.Group>
                     <Form.Group controlId="quantity">
                       <Form.Label>Quantity</Form.Label>
                       <Form.Control
