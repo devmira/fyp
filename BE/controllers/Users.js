@@ -1,6 +1,7 @@
 import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Coupons from "../models/CouponModel.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -46,11 +47,18 @@ export const updateMerchant = async (req, res) => {
 
 export const deleteMerchant = async (req, res) => {
   try {
+    Coupons.destroy({
+      where: {
+        merchant_id: req.params.id,
+      },
+    });
     const user = await Users.destroy({
       where: {
         id: req.params.id,
       },
     });
+    console.log(user);
+
     res.json(user);
   } catch (error) {
     console.log(error);
