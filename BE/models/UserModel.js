@@ -3,11 +3,6 @@ import db from "./index.js";
 
 const { DataTypes } = Sequelize;
 class Users extends Sequelize.Model {
-  static associate(models) {
-    this.belongsTo(models.coupons, {
-      foreignKey: "merchant_id",
-    });
-  }
 }
 
 Users.init(

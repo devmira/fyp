@@ -3,13 +3,6 @@ import db from "./index.js";
 
 const { DataTypes } = Sequelize;
 class Coupons extends Sequelize.Model {
-  static associate(models) {
-    console.log("kkk", models);
-    this.hasOne(models.users, {
-      foreignKey: "merchant_id",
-      sourceKey: "id",
-    });
-  }
 }
 
 Coupons.init(

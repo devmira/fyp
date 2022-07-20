@@ -21,7 +21,7 @@ export const createCoupon = async (req, res) => {
       description: description,
       expiry_date: expiry_date,
       coupon_code: coupon_code,
-      quantity: quantity,
+      quantity: quantity === 'null' ? null : quantity,
       city: city,
       address: address,
       inventoryType: inventoryType,
