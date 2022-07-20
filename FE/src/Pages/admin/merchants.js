@@ -8,6 +8,8 @@ import emailjs from "@emailjs/browser";
 const Merchants = () => {
   const [merchants, setMerchants] = useState([]);
   const form = useRef(null);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
 
   const getMerchants = () => {
     api.get(`http://localhost:5000/merchants`).then((response) => {
@@ -15,7 +17,9 @@ const Merchants = () => {
     });
   };
 
-  const doAction = (action, id) => {
+  const doAction = (action, id, merEmail, merName) => {
+    setEmail(merEmail);
+    setName(merName);
     if (action === true || action === false) {
       api
         .post(`http://localhost:5000/update-merchant/${id}`, {
@@ -120,19 +124,20 @@ const Merchants = () => {
                             <form ref={form} onSubmit={doAction}>
                               <div className="col-4">
                                 <input
-                                  type="email"
-                                  className="form-control"
+                                  type="text"
                                   name="email"
-                                  readOnly
-                                  value={merchant.email}
+                                  id="email"
+                                  value={email}
                                   hidden
+                                  onChange={(val) => {console.log(val)}}
                                 />
                                 <input
+                                  value={name}
                                   hidden
-                                  readOnly
-                                  className="form-control"
+                                  onChange={(val) => {console.log(val)}}
+                                  type="text"
                                   name="name"
-                                  value={merchant.fullname}
+                                  id="name"
                                 />
                               </div>
                             </form>
@@ -152,7 +157,7 @@ const Merchants = () => {
                             {merchant.status === true ? (
                               <Button
                                 onClick={() => {
-                                  doAction("Delete", merchant.id);
+                                  doAction("Delete", merchant.id, merchant.email, merchant.name);
                                 }}
                                 className="label theme-bg2 text-white f-12"
                               >
@@ -164,7 +169,7 @@ const Merchants = () => {
                               <>
                                 <Button
                                   onClick={() => {
-                                    doAction(false, merchant.id);
+                                    doAction(false, merchant.id, merchant.email, merchant.name);
                                   }}
                                   className="label theme-bg2 text-white f-12"
                                 >
@@ -172,7 +177,7 @@ const Merchants = () => {
                                 </Button>
                                 <Button
                                   onClick={() => {
-                                    doAction(true, merchant.id);
+                                    doAction(true, merchant.id, merchant.email, merchant.name);
                                   }}
                                   className="label theme-bg text-white f-12"
                                 >

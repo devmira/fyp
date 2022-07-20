@@ -83,7 +83,7 @@ const Coupons = () => {
                     .map((coupon, index) => {
                       return (
                         <tr key={index} className="unread">
-                          <td>
+                          <td style={{width: "300px", whiteSpace: "break-spaces"}}>
                             <h6 className="mb-1">{coupon.name}</h6>
                           </td>
                           <td>

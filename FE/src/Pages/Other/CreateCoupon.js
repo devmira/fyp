@@ -35,7 +35,7 @@ const SamplePage = (props) => {
       data.append("expiry_date", values["expiry_date"]);
       data.append("coupon_code", values["coupon_code"]);
       data.append("description", values["description"]);
-      data.append("quantity", values["quantity"]);
+      data.append("quantity", values["quantity"] || null);
       data.append("city", values["city"]);
       data.append("address", values["address"]);
       data.append("inventoryType", values["inventoryType"]);
@@ -75,6 +75,7 @@ const SamplePage = (props) => {
                         type="text"
                         placeholder="GET YOUR 50% NOW"
                         name="name"
+                        required
                         onChange={onFormChange}
                       />
                     </Form.Group>
@@ -82,6 +83,7 @@ const SamplePage = (props) => {
                       <Form.Label>Coupon description</Form.Label>
                       <Form.Control
                         as="textarea"
+                        required
                         rows="3"
                         name="description"
                         placeholder="Get 50% now from Zalora on selected items!"
@@ -91,12 +93,13 @@ const SamplePage = (props) => {
                     <Form.Group controlId="image">
                       <Form.Label>Coupon image</Form.Label>
                       <br />
-                      <input type="file" name="file" onChange={onInputChange} />
+                      <input type="file" required name="file" onChange={onInputChange} />
                     </Form.Group>
                     <Form.Group controlId="expiryDate">
                       <Form.Label>Expiry Date</Form.Label>
                       <Form.Control
                         type="date"
+                        required
                         name="expiry_date"
                         onChange={onFormChange}
                       />
@@ -105,6 +108,7 @@ const SamplePage = (props) => {
                       <Form.Label>Coupon Sections</Form.Label>
                       <Form.Control
                         as="select"
+                        required
                         name="section"
                         onChange={onFormChange}
                       >
@@ -113,6 +117,7 @@ const SamplePage = (props) => {
                         })}
                       </Form.Control>
                     </Form.Group>
+                    <Form.Label>Inventory Type</Form.Label>
                     <Form.Group controlId="inventoryType">
                       {["radio"].map((type) => (
                         <div key={`default-${type}`}>
@@ -148,6 +153,7 @@ const SamplePage = (props) => {
                       <Form.Control
                         type="text"
                         name="coupon_code"
+                        required
                         placeholder="HALFPRICE30"
                         onChange={onFormChange}
                       />
@@ -160,6 +166,7 @@ const SamplePage = (props) => {
                       <div>
                         <RegionDropdown
                           name="city"
+                          required
                           country="Malaysia"
                           value={region}
                           onChange={(val) => {
@@ -174,6 +181,7 @@ const SamplePage = (props) => {
                       <Form.Control
                         as="textarea"
                         rows="2"
+                        required
                         name="address"
                         placeholder="L3-25, NU SENTRAL, No 201, JLN TUN SAMBANTHAN, 50470, KUALA LUMPUR"
                         onChange={onFormChange}

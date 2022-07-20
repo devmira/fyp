@@ -22,8 +22,7 @@ const Coupons = () => {
       <Row>
         {coupons.map((coupon) => {
           return (
-            (new Date(coupon.expiry_date) > new Date() ||
-              coupon.expiry_date === null) && (
+            (new Date(coupon.expiry_date) > new Date()) && (
               <Col md={6} xl={4} key={coupon.id}>
                 <CouponCard coupon={coupon} />
               </Col>

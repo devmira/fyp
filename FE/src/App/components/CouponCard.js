@@ -51,19 +51,12 @@ const CouponCard = ({ coupon, action = true }) => {
             {coupon.description}
           </p>
           {window.location.pathname !== "/inventing-system" &&
-          coupon.expiry_date ? (
             <b>
               <p style={{ fontFamily: "Open Sans, sans-Serif" }}>
                 Get your deal by {new Date(coupon.expiry_date).toDateString()}
               </p>
             </b>
-          ) : (
-            window.location.pathname !== "/inventing-system" && (
-              <b>
-                <p className="text-c-red">UNLIMITED TIME FOR THIS OFFER!!!</p>
-              </b>
-            )
-          )}
+          }
           {tokenService.getUser()?.role === "Merchant" &&
             coupon.merchant_id === tokenService.getUser()?.id &&
             window.location.pathname !== "/home" &&

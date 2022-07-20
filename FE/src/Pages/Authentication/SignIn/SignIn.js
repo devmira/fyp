@@ -85,6 +85,7 @@ const SignIn = ({ history }) => {
                     type="email"
                     placeholder="Email"
                     name="email"
+                    required
                     onChange={onFormChange}
                   />
                 </Form.Group>
@@ -95,6 +96,7 @@ const SignIn = ({ history }) => {
                   <Form.Control
                     type="password"
                     name="password"
+                    required
                     placeholder="Password"
                   />
                 </Form.Group>

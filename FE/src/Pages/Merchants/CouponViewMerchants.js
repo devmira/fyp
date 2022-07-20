@@ -22,7 +22,7 @@ const CouponViewMerchants = ({ match, history }) => {
     try {
       const data = {
         expiry_date: values["expiry_date"],
-        quantity: values["quantity"],
+        quantity: values["quantity"] || null,
       };
 
       await axios({
